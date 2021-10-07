@@ -221,6 +221,7 @@ CREATE TABLE IF NOT EXISTS public.parts
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+CREATE INDEX parts_part_no_idx ON parts (part_no);
 
 CREATE TABLE public.projects
 (
