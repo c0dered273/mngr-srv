@@ -10,5 +10,6 @@
 
 ### Технологии
 
-Backend - Spring Boot, Spring Data JPA, Microsoft SQL Server
+Backend - Spring Boot, Spring Data JPA, PostgreSQL
+
 Frontend - ReactJS, Redux, Node.js
