@@ -49,4 +49,4 @@ jrebel.lic
 # java specific
 *.class
 # Project exclude paths
-/.gradle/
+/.gradle/!/logs/
