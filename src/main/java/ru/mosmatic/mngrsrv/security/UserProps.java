@@ -1,4 +1,4 @@
-package ru.mosmatic.mngrsrv.auth;
+package ru.mosmatic.mngrsrv.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,54 +10,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Objects;
-import java.util.Set;
 
 /**
- * Роли для пользователей.
+ * Настройки, индивидуальные для каждого пользователя.
  */
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor()
-@Entity(name = "Role")
-@Table(name = "roles")
-public class Role {
+@Entity(name = "UserProps")
+@Table(name = "user_props")
+public class UserProps {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    @ToString.Exclude
-    private Set<User> users;
-
-    /**
-     * Возвращает роль.
-     *
-     * @param name Имя роли
-     * @return Role
-     */
-    public static Role of(String name) {
-        var role = new Role();
-        role.setName(name);
-        return role;
-    }
+    @Column(name = "last_project_id")
+    private Long lastProjectId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Role role)) {
+        if (!(o instanceof UserProps userProps)) {
             return false;
         }
-        return getId().equals(role.getId());
+        return getId().equals(userProps.getId());
     }
 
     @Override

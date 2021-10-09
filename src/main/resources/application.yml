@@ -1,6 +1,8 @@
+#Server
 server:
   port: 8080
 
+#Spring
 spring:
   #Main DB config
   datasource:
@@ -16,8 +18,14 @@ spring:
      ddl-auto: none
   liquibase:
     enabled: true
+  #Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8180/auth/realms/mosm/protocol/openid-connect/certs
 
-  #Spring misc
+  #Misc
   main:
     banner-mode: off
   output:
@@ -25,6 +33,14 @@ spring:
       enabled: always
   application:
     name: mngr-srv
+
+#Keycloak
+#keycloak:
+#  auth-server-url: http://localhost:8180/auth
+#  realm: mosm
+#  resource: login-app
+#  public-client: true
+#  bearer-only: true
 
 #Logging
 logging:

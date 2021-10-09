@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.mosmatic.mngrsrv.auth.User;
 import ru.mosmatic.mngrsrv.customers.Customer;
 
 import javax.persistence.CascadeType;
@@ -33,7 +32,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity(name = "Project")
-@Table(name ="projects")
+@Table(name = "projects")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projects_gen")
@@ -43,10 +42,6 @@ public class Project {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -62,18 +57,21 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Location> locations = new ArrayList<>();
 
+    @Column(name = "username", length = 36)
+    private String username;
+
     /**
      * Возвращает проект.
      *
      * @param name название проекта
-     * @param user пользователь, создавший проект
+     * @param username UUID пользователя, создавшего проект
      * @param customer заказчик проекта
      * @return Project
      */
-    public static Project of(String name, User user, Customer customer) {
+    public static Project of(String name, String username, Customer customer) {
         var project = new Project();
         project.setName(name);
-        project.setUser(user);
+        project.setUsername(username);
         project.setCustomer(customer);
         project.setCreated(LocalDateTime.now(ZoneId.of("UTC")));
         project.setLastModified(LocalDateTime.now(ZoneId.of("UTC")));
