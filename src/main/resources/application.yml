@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  #Main DB config
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mosmngr
+    username: mosmngr
+    password: mosmngr
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+     ddl-auto: none
+  liquibase:
+    enabled: true
+
+  #Spring misc
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: mngr-srv
+
+#Logging
+logging:
+  level:
+    root: INFO
+    web: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+  file:
+    name: ./logs/mngr-srv.log
