@@ -28,6 +28,9 @@ public class UserProps {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "username", length = 36)
+    private String username;
+
     @Column(name = "last_project_id")
     private Long lastProjectId;
 
