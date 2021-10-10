@@ -57,7 +57,7 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Location> locations = new ArrayList<>();
 
-    @Column(name = "username", length = 36)
+    @Column(name = "username", nullable = false, length = 36)
     private String username;
 
     /**

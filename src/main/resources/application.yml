@@ -1,10 +1,42 @@
+#Logging
+logging:
+  level:
+    root: INFO
+    web: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+  #        type:
+  #          descriptor:
+  #            sql:
+  #              BasicBinder: TRACE
+  file:
+    name: ./logs/mngr-srv.log
+
 #Server
 server:
   port: 8080
 
 #Spring
 spring:
-  #Main DB config
+  application:
+    name: mngr-srv
+  profiles:
+    active: development
+  #Misc
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: always
+
+---
+
+#Development config
+spring:
+  config:
+    activate:
+      on-profile: development
   datasource:
     url: jdbc:postgresql://localhost:5432/mosmngr
     username: mosmngr
@@ -15,7 +47,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
-     ddl-auto: none
+      ddl-auto: none
   liquibase:
     enabled: true
   #Security
@@ -25,34 +57,29 @@ spring:
         jwt:
           jwk-set-uri: http://localhost:8180/auth/realms/mosm/protocol/openid-connect/certs
 
-  #Misc
-  main:
-    banner-mode: off
-  output:
-    ansi:
-      enabled: always
-  application:
-    name: mngr-srv
+---
 
-#Keycloak
-#keycloak:
-#  auth-server-url: http://localhost:8180/auth
-#  realm: mosm
-#  resource: login-app
-#  public-client: true
-#  bearer-only: true
-
-#Logging
-logging:
-  level:
-    root: INFO
-    web: DEBUG
-    org:
+#Production config
+spring:
+  config:
+    activate:
+      on-profile: production
+  datasource:
+    url: jdbc:postgresql://app-db:5432/mosmngr
+    username: mosmngr
+    password: mosmngr
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
       hibernate:
-        SQL: DEBUG
-#        type:
-#          descriptor:
-#            sql:
-#              BasicBinder: TRACE
-  file:
-    name: ./logs/mngr-srv.log
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+  #Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://keycloak:8080/auth/realms/mosm/protocol/openid-connect/certs
