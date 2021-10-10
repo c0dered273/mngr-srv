@@ -23,6 +23,8 @@ spring:
     name: mngr-srv
   profiles:
     active: development
+  session:
+    store-type: none
   #Misc
   main:
     banner-mode: off
